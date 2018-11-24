@@ -11,8 +11,10 @@ RUN apk add --no-cache git nodejs nodejs-npm curl wget unzip \
 
 WORKDIR /opt/magic_mirror
 
-RUN git clone --depth 1 -b master https://github.com/MichMich/MagicMirror.git . \
-  && npm install --unsafe-perm
+RUN git clone --depth 1 -b master https://github.com/MichMich/MagicMirror.git .
+RUN sed -i 's/"spectron": "3.7.x"/"spectron": "^4.0.0"/' package.json
+RUN rm package-lock.json
+RUN npm install --unsafe-perm
 
 # Copy data
 COPY run.sh /
